@@ -78,7 +78,7 @@ $$\Sigma = LL^T \quad \Longrightarrow \quad X_t = \vec{\mu} + LZ_t, \quad Z_t \s
 $$dX_{t,a} = \left(\mu_a - \tfrac{1}{2}\sigma_a^2\right)dt + \sum_k L_{a,k}\,dZ_{t,k} + J_t\,dN_t, \quad N_t \sim \text{Poisson}(\lambda)$$
 
 ### DCF Free Cash Flow
-$$\text{FCF}_t = \text{NOPAT}_t + \text{D\&A}_t - \text{CapEx}_t - \Delta\text{NWC}_t$$
+$$\text{FCF}_t = \text{NOPAT}_t + \text{DA}_t - \text{CapEx}_t - \Delta\text{NWC}_t$$
 
 $$\text{EV} = \sum_{t=1}^{10} \frac{\text{FCF}_t}{(1+r)^t} + \frac{\text{FCF}_{10}(1+g)}{(r-g)(1+r)^{10}}$$
 

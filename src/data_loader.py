@@ -36,24 +36,54 @@ class StockDataLoader:
                 raise ValueError(f"No data found for ticker {t} between {self.start_date} and {self.end_date}.")
             individual_prices[t] = hist['Close']
 
-            # Download metadata safely
+            # ── Metadata: fast_info first (cloud-friendly, avoids rate-limits)
+            # then fall back to full ticker.info, then derive from ticker symbol
+            fast = {}
             info = {}
             try:
-                info = ticker_obj.info
+                fast = ticker_obj.fast_info   # lightweight endpoint — works on cloud
+            except Exception:
+                pass
+            try:
+                info = ticker_obj.info or {}
                 if not isinstance(info, dict):
                     info = {}
             except Exception:
                 pass
 
+            # Derive currency from ticker suffix (.NS → INR, default USD)
+            def _guess_currency(tkr: str) -> str:
+                if tkr.endswith(".NS") or tkr.endswith(".BO"):
+                    return "INR"
+                if tkr.endswith(".L"):
+                    return "GBp"
+                if tkr.endswith(".HK"):
+                    return "HKD"
+                return "USD"
+
+            # Resolve market cap: fast_info uses market_cap, info uses marketCap
+            market_cap = (
+                getattr(fast, "market_cap", None)
+                or info.get("marketCap", None)
+            )
+
             asset_info = {
                 "ticker": t,
-                "name": info.get("longName", t),
-                "exchange": info.get("exchange", "N/A"),
-                "sector": info.get("sector", "N/A"),
-                "industry": info.get("industry", "N/A"),
-                "currency": info.get("currency", "USD"),
-                "market_cap": info.get("marketCap", None),
-                "country": info.get("country", "N/A")
+                "name": info.get("longName") or info.get("shortName") or t,
+                "exchange": (
+                    getattr(fast, "exchange", None)
+                    or info.get("exchange", "N/A")
+                    or "N/A"
+                ),
+                "sector": info.get("sector", "N/A") or "N/A",
+                "industry": info.get("industry", "N/A") or "N/A",
+                "currency": (
+                    getattr(fast, "currency", None)
+                    or info.get("currency", None)
+                    or _guess_currency(t)
+                ),
+                "market_cap": market_cap,
+                "country": info.get("country", "N/A") or "N/A",
             }
             self.portfolio_info.append(asset_info)
 
