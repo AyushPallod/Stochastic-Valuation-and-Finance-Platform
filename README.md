@@ -1,7 +1,7 @@
 # 📈 Stochastic Finance & Valuation Platform
 
-[![Streamlit App](https://static.streamlit.io/badge-github.svg)](https://stochastic-valuation-and-finance-platform-ayush.streamlit.app/) <!-- Replace with your live Streamlit URL -->
-[![CI/CD Build & Test](https://github.com/AyushPallod/stochastic-finance-hub/workflows/CI/badge.svg)](https://github.com/AyushPallod/Stochastic-Valuation-and-Finance-Platform/actions)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Live%20Demo-FF4B4B?logo=streamlit&logoColor=white)](https://stochastic-valuation-and-finance-platform-ayush.streamlit.app/)
+[![CI Build & Test](https://github.com/AyushPallod/Stochastic-Valuation-and-Finance-Platform/actions/workflows/ci.yml/badge.svg)](https://github.com/AyushPallod/Stochastic-Valuation-and-Finance-Platform/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
 
